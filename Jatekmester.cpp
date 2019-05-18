@@ -2,7 +2,7 @@
 #include "widgets.hpp"
 #include "Jatekmester.hpp"
 #include "TextBox.hpp"
-#include <vector>
+#include <iostream>
 
 using namespace genv;
 
@@ -26,22 +26,32 @@ void Jatekmester::handle(genv::event ev){
     for (Widget * wg : widgets){
         wg->draw();
     }
-    int focus = 0;
-    while(gin >> ev && ev.keycode!=key_escape) {
+    int focus = 0, _last=0;
+    while(gin >> ev && ev.keycode!=key_escape){
+        //if(ev.type==ev.button && ev.keycode==key_down && focus<=71) focus+=9;
         for(unsigned i=0; i<widgets.size(); i++){
-        if (ev.type == ev_mouse && ev.button==btn_left) {
+        if (ev.type == ev_mouse && ev.button==btn_left){
             for (size_t i=0;i<widgets.size();i++) {
                 if (widgets[i]->is_selected(ev.pos_x, ev.pos_y)) focus=i;
             }
         }
         widgets[focus]->handle(ev);
+        for(unsigned j=0; j<widgets.size();j++)
+        for(unsigned i=0; i<widgets.size();i++){
+            if(((unsigned) j%9==i%9 || (unsigned) j/9==i/9/* || widgets[focus]->_box==widgets[i]->_box*/) && widgets[j]->getvalue()==widgets[i]->getvalue() && widgets[j]->getvalue()!="" && (unsigned)j!=i){
+                widgets[i]->serror();
+                widgets[j]->serror();
+            }
+        }
         if((unsigned) focus!=widgets.size()-1){
                     widgets[widgets.size()-1]->nohighlight();
                 }
-        for (Widget * w : widgets) {
+        /*for (Widget * w : widgets) {
             w->draw();
-        }
+        }*/
+        widgets[_last]->draw();
         widgets[focus]->highlight();
+        _last=focus;
     }
     gout << refresh;
     }
@@ -80,3 +90,6 @@ void Jatekmester::setvalue(std::vector<std::string> _list){
 
 void Jatekmester::dilit(){
 }
+
+void Jatekmester::serror(){
+};

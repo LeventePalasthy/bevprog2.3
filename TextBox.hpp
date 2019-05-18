@@ -8,6 +8,7 @@ class TextBox: public Widget
 {
 protected:
     std::string szoveg;
+    int _box;
     bool valasztva;
 public:
     TextBox(int x, int y, int sx, int sy);
@@ -29,6 +30,8 @@ public:
     virtual void addvalue(std::string _new);
 
     virtual void dilit();
+
+    virtual void serror();
 };
 
 #endif

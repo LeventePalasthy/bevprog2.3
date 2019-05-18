@@ -8,6 +8,7 @@ TextBox::TextBox(int x, int y, int sx, int sy)
     :Widget(x,y,sx,sy)
 {
  szoveg="";
+ _box=0;
  valasztva=false;
 }
 
@@ -70,4 +71,10 @@ void TextBox::setvalue(std::vector<std::string> _list){
 }
 
 void TextBox::dilit(){
+}
+
+void TextBox::serror(){
+    gout<<color(0,0,0)<<move_to(_x,_y)<<box(_size_x,_size_y);
+    gout<<color(230,100,100)<<move_to(_x+1,_y+1)<<box(_size_x-2,_size_y-2);
+    gout<<color(255,0,0)<<move_to(_x+_size_x/2-5,(_y+_size_y/2)+5)<<text(szoveg);
 }

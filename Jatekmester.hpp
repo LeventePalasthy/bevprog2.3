@@ -28,6 +28,8 @@ public:
     virtual void addvalue(std::string _new);
 
     virtual void dilit();
+
+    virtual void serror();
 };
 
 #endif

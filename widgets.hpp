@@ -20,8 +20,7 @@ public:
     virtual void setvalue(std::vector<std::string> _list)=0;
     virtual void addvalue(std::string _new)=0;
     virtual void dilit()=0;
+    virtual void serror()=0;
 };
-
-                                                                                                                                                                                                                                                                  //szeretnek pontlevonast kerni a beadandomra mert feltoltottem egy oktatasi segedletet sajat munka helyett :)
 
 #endif // WIDGETS_HPP_INCLUDED
