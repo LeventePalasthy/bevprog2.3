@@ -23,12 +23,14 @@ void TextBox::draw()
 }
 
 void TextBox::highlight(){
-    gout<<color(255,230,80)<<move_to(_x,_y)<<box(_size_x,_size_y);
+    gout<<color(0,0,0)<<move_to(_x,_y)<<box(_size_x,_size_y);
+    gout<<color(255,230,80)<<move_to(_x+1,_y+1)<<box(_size_x-2,_size_y-2);
     gout<<color(0,0,255)<<move_to(_x+_size_x/2-5,(_y+_size_y/2)+5)<<text(szoveg);
 }
 
 void TextBox::nohighlight(){
-    gout<<color(255,255,255)<<move_to(_x,_y)<<box(_size_x,_size_y);
+    gout<<color(0,0,0)<<move_to(_x,_y)<<box(_size_x,_size_y);
+    gout<<color(255,255,255)<<move_to(_x+1,_y+1)<<box(_size_x-2,_size_y-2);
     gout<<color(0,0,255)<<move_to(_x+_size_x/2-5,(_y+_size_y/2)+5)<<text(szoveg);
 }
 
