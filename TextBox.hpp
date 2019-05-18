@@ -14,6 +14,10 @@ public:
 
     virtual void draw();
 
+    virtual void highlight();
+
+    virtual void nohighlight();
+
     virtual void handle(genv::event ev);
 
     virtual std::string getvalue();
