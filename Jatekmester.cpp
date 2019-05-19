@@ -18,7 +18,7 @@ Jatekmester::Jatekmester(int x, int y, int sx, int sy)
 void Jatekmester::handle(genv::event ev){
     gout.open(400,400);
     std::vector<Widget*> widgets;
-    gout<<move_to(0,0)<<color(150,150,150)<<box(400,400);
+    gout<<move_to(0,0)<<color(150,150,150)<<box(400,400)<<move_to(20,370)<<color(0,0,0)<<text("Press r to start a new game");
 
     std::ifstream bf("sud1.txt");
     std::string _code;
@@ -28,7 +28,6 @@ void Jatekmester::handle(genv::event ev){
     for(int i=0;i<wo;i++){
         getline(bf,_code);
     }
-
     for(unsigned i=0; i<9; i++){
         for (unsigned j=0; j<9; j++){
             TextBox* n=new TextBox(35+35*i,35+35*j,35,35);
@@ -37,13 +36,34 @@ void Jatekmester::handle(genv::event ev){
             widgets.push_back(n);
         }
     }
+    bf.close();
 
     for (Widget * wg : widgets){
         wg->draw();
     }
     int focus = 0;
     while(gin >> ev && ev.keycode!=key_escape){
-        //if(ev.type==ev.button && ev.keycode==key_down && focus<=71) focus+=9;
+        if(ev.type==ev_key && ev.keycode==key_down && focus%9!=8) focus++;
+        if(ev.type==ev_key && ev.keycode==key_up && focus%9!=0) focus--;
+        if(ev.type==ev_key && ev.keycode==key_right && focus<=71) focus+=9;
+        if(ev.type==ev_key && ev.keycode==key_left && focus>=8) focus-=9;
+        if(ev.type==ev_key && ev.keycode==114){
+            std::ifstream bf("sud1.txt");
+            widgets.clear();
+            int wo=rand()%puzzles+1;
+            for(int i=0;i<wo;i++){
+                getline(bf,_code);
+            }
+            for(unsigned i=0; i<9; i++){
+                for (unsigned j=0; j<9; j++){
+                    TextBox* n=new TextBox(35+35*i,35+35*j,35,35);
+                    if(_code[9*i+j]!=';') n->addvalue(_code[9*i+j]);
+                    n->setbox(j/3*3+i/3);
+                    widgets.push_back(n);
+                }
+            }
+            bf.close();
+        }
         for(unsigned i=0; i<widgets.size(); i++){
         if (ev.type == ev_mouse && ev.button==btn_left){
             for (size_t i=0;i<widgets.size();i++) {
@@ -55,7 +75,8 @@ void Jatekmester::handle(genv::event ev){
         bool _error=false;
         for(unsigned i=0; i<widgets.size();i++){
             if((j%9==i%9 || j/9==i/9 || widgets[j]->getbox()==widgets[i]->getbox()) && widgets[j]->getvalue()==widgets[i]->getvalue() && widgets[j]->getvalue()!="" && j!=i){
-                _error=true;            }
+                _error=true;
+        }
         }
         if(_error) widgets[j]->serror();
         else widgets[j]->draw();
@@ -63,6 +84,21 @@ void Jatekmester::handle(genv::event ev){
         widgets[focus]->highlight();
     }
     gout << refresh;
+
+
+
+    bool _done=true;
+    for (unsigned j=0;j<widgets.size();j++){
+        for(unsigned i=0; i<widgets.size();i++){
+            if((j%9==i%9 || j/9==i/9 || widgets[j]->getbox()==widgets[i]->getbox()) && widgets[j]->getvalue()==widgets[i]->getvalue() && widgets[j]->getvalue()!="" && j!=i){
+                _done=false;
+        }
+        }
+        if(widgets[j]->getvalue()=="") _done=false;
+    }
+    if(_done){
+        gout<<move_to(20,390)<<color(0,0,0)<<text("Congratulations, You won the game");
+    }
     }
 }
 
