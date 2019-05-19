@@ -25,7 +25,7 @@ public:
 
     virtual void setvalue(std::vector<std::string> _list);
 
-    virtual void addvalue(std::string _new);
+    virtual void addvalue(char _new);
 
     virtual void dilit();
 

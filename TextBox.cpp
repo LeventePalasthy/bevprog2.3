@@ -62,8 +62,8 @@ void TextBox::handle(event ev)
 
 }
 
-void TextBox::addvalue(std::string _new){
-
+void TextBox::addvalue(char _new){
+    szoveg=_new;
 }
 
 void TextBox::setvalue(std::vector<std::string> _list){
@@ -86,3 +86,4 @@ void TextBox::setbox(int b){
 int TextBox::getbox(){
     return _box;
 }
+

@@ -18,7 +18,7 @@ public:
     virtual std::string getvalue()=0;
     virtual void del()=0;
     virtual void setvalue(std::vector<std::string> _list)=0;
-    virtual void addvalue(std::string _new)=0;
+    virtual void addvalue(char _new)=0;
     virtual void dilit()=0;
     virtual void serror()=0;
     virtual void setbox(int b)=0;

@@ -3,6 +3,9 @@
 #include "Jatekmester.hpp"
 #include "TextBox.hpp"
 #include <iostream>
+#include <fstream>
+#include <ctime>
+#include <cstdlib>
 
 using namespace genv;
 
@@ -16,9 +19,20 @@ void Jatekmester::handle(genv::event ev){
     gout.open(400,400);
     std::vector<Widget*> widgets;
     gout<<move_to(0,0)<<color(150,150,150)<<box(400,400);
+
+    std::ifstream bf("sud1.txt");
+    std::string _code;
+    int puzzles=4;
+    srand(time(0));
+    int wo=rand()%puzzles+1;
+    for(int i=0;i<wo;i++){
+        getline(bf,_code);
+    }
+
     for(unsigned i=0; i<9; i++){
         for (unsigned j=0; j<9; j++){
             TextBox* n=new TextBox(35+35*i,35+35*j,35,35);
+            if(_code[9*i+j]!=';') n->addvalue(_code[9*i+j]);
             n->setbox(j/3*3+i/3);
             widgets.push_back(n);
         }
@@ -37,9 +51,6 @@ void Jatekmester::handle(genv::event ev){
             }
         }
         widgets[focus]->handle(ev);
-        /*for (Widget * w : widgets) {
-            w->draw();
-        }*/
         for (unsigned j=0;j<widgets.size();j++){
         bool _error=false;
         for(unsigned i=0; i<widgets.size();i++){
@@ -73,12 +84,13 @@ std::string Jatekmester::getvalue()
     return "It's working!!!";
 }
 
+
 void Jatekmester::del(){
 }
 
 
 
-void Jatekmester::addvalue(std::string _new){
+void Jatekmester::addvalue(char _new){
 
 }
 
