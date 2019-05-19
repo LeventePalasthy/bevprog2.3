@@ -21,6 +21,8 @@ public:
     virtual void addvalue(std::string _new)=0;
     virtual void dilit()=0;
     virtual void serror()=0;
+    virtual void setbox(int b)=0;
+    virtual int getbox()=0;
 };
 
 #endif // WIDGETS_HPP_INCLUDED

@@ -78,3 +78,11 @@ void TextBox::serror(){
     gout<<color(230,100,100)<<move_to(_x+1,_y+1)<<box(_size_x-2,_size_y-2);
     gout<<color(255,0,0)<<move_to(_x+_size_x/2-5,(_y+_size_y/2)+5)<<text(szoveg);
 }
+
+void TextBox::setbox(int b){
+    _box=b;
+}
+
+int TextBox::getbox(){
+    return _box;
+}

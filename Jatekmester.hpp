@@ -30,6 +30,10 @@ public:
     virtual void dilit();
 
     virtual void serror();
+
+    virtual void setbox(int b);
+
+    virtual int getbox();
 };
 
 #endif

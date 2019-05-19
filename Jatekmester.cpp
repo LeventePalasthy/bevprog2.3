@@ -19,6 +19,7 @@ void Jatekmester::handle(genv::event ev){
     for(unsigned i=0; i<9; i++){
         for (unsigned j=0; j<9; j++){
             TextBox* n=new TextBox(35+35*i,35+35*j,35,35);
+            n->setbox(j/3*3+i/3);
             widgets.push_back(n);
         }
     }
@@ -26,7 +27,7 @@ void Jatekmester::handle(genv::event ev){
     for (Widget * wg : widgets){
         wg->draw();
     }
-    int focus = 0, _last=0;
+    int focus = 0;
     while(gin >> ev && ev.keycode!=key_escape){
         //if(ev.type==ev.button && ev.keycode==key_down && focus<=71) focus+=9;
         for(unsigned i=0; i<widgets.size(); i++){
@@ -36,22 +37,19 @@ void Jatekmester::handle(genv::event ev){
             }
         }
         widgets[focus]->handle(ev);
-        for(unsigned j=0; j<widgets.size();j++)
-        for(unsigned i=0; i<widgets.size();i++){
-            if(((unsigned) j%9==i%9 || (unsigned) j/9==i/9/* || widgets[focus]->_box==widgets[i]->_box*/) && widgets[j]->getvalue()==widgets[i]->getvalue() && widgets[j]->getvalue()!="" && (unsigned)j!=i){
-                widgets[i]->serror();
-                widgets[j]->serror();
-            }
-        }
-        if((unsigned) focus!=widgets.size()-1){
-                    widgets[widgets.size()-1]->nohighlight();
-                }
         /*for (Widget * w : widgets) {
             w->draw();
         }*/
-        widgets[_last]->draw();
+        for (unsigned j=0;j<widgets.size();j++){
+        bool _error=false;
+        for(unsigned i=0; i<widgets.size();i++){
+            if((j%9==i%9 || j/9==i/9 || widgets[j]->getbox()==widgets[i]->getbox()) && widgets[j]->getvalue()==widgets[i]->getvalue() && widgets[j]->getvalue()!="" && j!=i){
+                _error=true;            }
+        }
+        if(_error) widgets[j]->serror();
+        else widgets[j]->draw();
+        }
         widgets[focus]->highlight();
-        _last=focus;
     }
     gout << refresh;
     }
@@ -92,4 +90,10 @@ void Jatekmester::dilit(){
 }
 
 void Jatekmester::serror(){
+};
+
+void Jatekmester::setbox(int b){
+};
+
+int Jatekmester::getbox(){
 };
