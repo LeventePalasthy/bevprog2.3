@@ -6,3 +6,4 @@ LOG5: JátékMester létrehozása
 LOG6: Szombat esti állapot (félkész ellenőrző rendszer)
 LOG7: Ellenőrző rendszer befejezése
 LOG8: Pálya beolvasása fájlból (4-pálya)
+LOG9: Játék végi ellenőrzés, újrakezdési lehetőség
